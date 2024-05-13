@@ -268,7 +268,7 @@
                     <nav th:if="${bookPage.totalPages > 0}" aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li class="page-item" th:if="${bookPage.hasPrevious()}">
-                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${bookPage.number - 1})}" aria-label="Previous">
+                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${bookPage.number - 1}+1)}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
@@ -281,7 +281,7 @@
                             </li>
 
                             <li class="page-item" th:if="${bookPage.hasNext()}">
-                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${bookPage.number + 1})}" aria-label="Next">
+                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${bookPage.number + 1}+1)}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

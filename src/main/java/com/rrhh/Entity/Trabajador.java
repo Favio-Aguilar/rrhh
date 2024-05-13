@@ -43,7 +43,7 @@ public class Trabajador {
     @Column (name = "apellido")
     public String apellido;
 
-    @Min(value = 18, message = "La edad del Trabajador debe ser mayor o igual a 18")
+    //@Min(value = 18, message = "La edad del Trabajador debe ser mayor o igual a 18")
     @Column (name = "edad")
     public int edad;
 

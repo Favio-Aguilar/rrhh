@@ -314,8 +314,13 @@ public class VacacionesController {
             return "redirect:/dashboard/vacaciones/registrar";
         }
 
+
         // Si el total de días de vacaciones supera el máximo anual (30 días)
-        if (result.getdiastotales() == 30) {
+        Optional<VacacionesIdAnio> optionalVacaciones1 = Optional.ofNullable(result);
+        //int consultdiastotales = list.getDiasTotales();
+        int diasTotales = optionalVacaciones1.map(VacacionesIdAnio::getdiastotales).orElse(0);
+        System.out.println("DIAS TOTALES QUE LE QUEDAN : " + diasTotales);
+        if (diasTotales == 30) {
             redirectAttrs.addFlashAttribute("danger", "No puede exceder los 30 días de vacaciones anuales");
             return "redirect:/dashboard/vacaciones/registrar";
         }
@@ -338,21 +343,29 @@ public class VacacionesController {
 
         // Si no se completan las vacaciones del año, se guarda la nueva solicitud
 
-       if(ingresoDiasTotales > result.getdiasacumulados()){
-           redirectAttrs.addFlashAttribute("danger", "Los dias Solcitados que son : " + ingresoDiasTotales + ",  excede a los dias que le quedan " + result.getdiasacumulados());
-           return "redirect:/dashboard/vacaciones/registrar";
-       }
-        int diasAcumuladosDisponibles = 30 - consultDiasTotales;
-        if (ingresoDiasTotales > diasAcumuladosDisponibles) {
-            redirectAttrs.addFlashAttribute("warning", "Le faltan " + (ingresoDiasTotales - diasAcumuladosDisponibles) + " dias para completar sus vacaciones");
-            return "redirect:/dashboard/vacaciones/registrar";
-        }
-        //int diastotales = result.getdiastotales();
-       // int diasacumulados = result.getdiasacumulados();
         Optional<VacacionesIdAnio> optionalVacaciones = Optional.ofNullable(result);
         //int consultdiastotales = list.getDiasTotales();
         int diasacumulados = optionalVacaciones.map(VacacionesIdAnio::getdiasacumulados).orElse(0);
         System.out.println("DIAS ACUMULADOS QUE LE QUEDAN : " + diasacumulados);
+       if(diasacumulados == 0){
+           int diasacumulado = calculateAcumulados(ingresoDiasTotales);
+           vacaciones.setDiasAcumulados(diasacumulado);
+           vacacionesService.guardarVacaciones(vacaciones);
+           eliminarVentaSession(request);
+           redirectAttrs.addFlashAttribute("success", "Vacaciones registrado correctamente 1");
+           return "redirect:/dashboard/vacaciones";
+       } else if (ingresoDiasTotales > diasacumulados){
+            System.out.println("DIAS TOTALES INGRESADO : " + diasTotales);
+            redirectAttrs.addFlashAttribute("danger", "Los dias Solcitados que son : " + ingresoDiasTotales + ",  excede a los dias que le quedan " + diasacumulados);
+            return "redirect:/dashboard/vacaciones/registrar";
+       }
+        int diasAcumuladosDisponibles = 30 - consultDiasTotales;
+        if (ingresoDiasTotales > diasAcumuladosDisponibles) {
+            redirectAttrs.addFlashAttribute("warning", "Le faltan " + (ingresoDiasTotales - diasAcumuladosDisponibles) + " dias para completar sus vacaciones");
+            eliminarVentaSession(request);
+            return "redirect:/dashboard/vacaciones/registrar";
+        }
+
 
         /**/
         int diassolicitados = vacaciones.getDiasTotales(); System.out.println("DIAS QUE SOLICITA EL TRABAJADOR : " + diassolicitados);
@@ -441,6 +454,7 @@ public class VacacionesController {
     private void eliminarVentaSession(HttpServletRequest request) {
         request.getSession().removeAttribute("vacaciones");
     }
+
     ///////////////////////////////
     public int calcularDiasHabiles(Date fechaInicio, Date fechaFin) {
 

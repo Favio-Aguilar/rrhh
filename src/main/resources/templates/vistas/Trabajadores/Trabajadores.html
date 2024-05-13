@@ -286,7 +286,7 @@
 									</li>
 
 									<li class="page-item" th:if="${bookPage.hasNext()}">
-										<a class="page-link" th:href="@{/vistas/Trabajadores/Trabajadores(size=${bookPage.size}, page=${bookPage.number + 1})}" aria-label="Next">
+										<a class="page-link" th:href="@{/vistas/Trabajadores/Trabajadores(size=${bookPage.size}, page=${bookPage.number + 1}+1)}" aria-label="Next">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
