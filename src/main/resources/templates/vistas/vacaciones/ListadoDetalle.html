@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Listado de Vacaciones</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <th:block th:include="fragments/fragmentcss.html"></th:block>
+    <style>
+    .pagination {
+        display: flex;
+        list-style: none;
+        border-radius: 0.25rem;
+    }
+
+    .page-item {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: 0.5rem 1rem;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+    }
+
+    .page-link:hover {
+        z-index: 2;
+        text-decoration: none;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    .page-link.active {
+        z-index: 2;
+        color: #fff;
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+    .alert {
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.11);
+        display: table;
+        width: 100%;
+    }
+
+    .alert-white {
+        background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+        border-top-color: #d8d8d8;
+        border-bottom-color: #bdbdbd;
+        border-left-color: #cacaca;
+        border-right-color: #cacaca;
+        color: #404040;
+        padding-left: 61px;
+        position: relative;
+    }
+
+    .alert-white.rounded {
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+    .alert-white.rounded .icon {
+        border-radius: 3px 0 0 3px;
+        -webkit-border-radius: 3px 0 0 3px;
+    }
+
+    .alert-white .icon {
+        text-align: center;
+        width: 45px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 1px solid #bdbdbd;
+        padding-top: 15px;
+    }
+
+
+    .alert-white .icon:after {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        display: block;
+        content: '';
+        width: 10px;
+        height: 10px;
+        border: 1px solid #bdbdbd;
+        position: absolute;
+        border-left: 0;
+        border-bottom: 0;
+        top: 50%;
+        right: -6px;
+        margin-top: -3px;
+        background: #fff;
+    }
+
+    .alert-white .icon i {
+        font-size: 20px;
+        color: #fff;
+        left: 12px;
+        margin-top: -10px;
+        position: absolute;
+        top: 50%;
+    }
+    /*============ colors ========*/
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+
+    .alert-white.alert-success .icon,
+    .alert-white.alert-success .icon:after {
+        border-color: #54a754;
+        background: #60c060;
+    }
+
+    .alert-info {
+        background-color: #d9edf7;
+        border-color: #98cce6;
+        color: #3a87ad;
+    }
+
+    .alert-white.alert-info .icon,
+    .alert-white.alert-info .icon:after {
+        border-color: #3a8ace;
+        background: #4d90fd;
+    }
+
+
+    .alert-white.alert-warning .icon,
+    .alert-white.alert-warning .icon:after {
+        border-color: #d68000;
+        background: #fc9700;
+    }
+
+    .alert-warning {
+        background-color: #fcf8e3;
+        border-color: #f1daab;
+        color: #c09853;
+    }
+
+    .alert-danger {
+        background-color: #f2dede;
+        border-color: #e0b1b8;
+        color: #b94a48;
+    }
+
+    .alert-white.alert-danger .icon,
+    .alert-white.alert-danger .icon:after {
+        border-color: #ca452e;
+        background: #da4932;
+    }
+</style>
+
+</head>
+
+<body id="body">
+<!---------- Header ----------->
+<header th:replace="fragments/header :: header"></header>
+<!---------- End Header ----------->
+
+<!---------- Sidebar ----------->
+<aside th:replace="fragments/aside :: aside"></aside>
+<!---------- End Sidebar ----------->
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <form action="/dashboard/vacaciones" method="get">
+            <div class="input-group mb-3">
+                <input  class="form-control" type="text" name="nombreTrabajador" placeholder="Ingrese nombre del trabajador">
+                <button class="btn btn-info" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    Busca
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                </button>
+            </div>
+        </form>
+        <section class="section dashboard">
+            <div class="container bootstrap snippets bootdey">
+
+                <div class="alert alert-danger alert-white rounded" th:if="${danger != null}">
+                    <div class="icon">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
+                    <strong th:text="${danger}"></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="alert alert-success alert-white rounded" th:if="${success != null}">
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <strong>Success!</strong>
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="alert alert-warning alert-white rounded" th:if="${warning != null}" style="width: 50%">
+                    <div class="icon">
+                        <i class="fa fa-warning"></i>
+                    </div>
+                    <strong>Success!</strong>
+                    <span th:text="${warning}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="margin-left: 35%" >×</button>
+                </div>
+            </div>
+            <div class="container">
+                <a class="btn btn-primary btn-sm" th:href="@{/dashboard/vacaciones/registrar}"
+                    th:text="'ASIGNAR VACACIONES'" title="ASIGNAR VACACIONES">
+                </a>
+                <div
+                        class="alert alert-warning alert-dismissible fade show mt-2 mb-2"
+                        role="alert"
+                        th:if="${mensajeExitoso != null}"
+                        th:text="${mensajeExitoso}"
+                >
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close"
+                    ></button>
+                </div>
+
+                <br />
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">PERIODO </th>
+                            <th scope="col">TRABAJADOR</th>
+                            <th scope="col">DIAS GOZADOS</th>
+                            <th scope="col">DIAS SIN GOZAR</th>
+                           <!-- <th scope="col">DIAZ NO GOZADOS</th>-->
+                            <th scope="col">ESTADO2</th>
+                            <th scope="col">Pdf</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="trabajador : ${vacaciones}">
+                            <td th:text="${trabajador.idTrabajador}"></td>
+                            <td th:text="${trabajador.Periodo}"></td>
+                        <td th:text="${trabajador.nombre}"></td>
+                        <td th:text="${trabajador.diasTotales}"></td>
+                        <td th:text="${trabajador.diasAcumulados}"></td>
+                           <!-- <td th:text="${30 - trabajador.diasTotales}"></td>-->
+                            <td th:text="${trabajador.diasTotales == 30 ? 'GOZADO' : 'PENDIENTE'}"></td>
+                            <td><a th:href="@{/dashboard/vacaciones/{id}/reporte(id=${trabajador.idTrabajador})}"  target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/>
+                            </svg>
+                            </a></td>
+
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <nav th:if="${bookPage.totalPages > 0}" aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:if="${bookPage.hasPrevious()}">
+                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${bookPage.number - 1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${pageNumber})}"
+                                   th:text="${pageNumber}"
+                                   th:class="${pageNumber == bookPage.number + 1} ? active : ''">
+                                </a>
+                            </li>
+
+                            <li class="page-item" th:if="${bookPage.hasNext()}">
+                                <a class="page-link" th:href="@{/dashboard/vacaciones(size=${bookPage.size}, page=${bookPage.number + 1})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="container">
+                        <a th:href="@{/dashboard/vacaciones/reporte}" class="btn btn-primary" target="_blank">
+                            VER <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803q.43 0 .732-.173.305-.175.463-.474a1.4 1.4 0 0 0 .161-.677q0-.375-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.38.57.57 0 0 1-.238.241.8.8 0 0 1-.375.082H.788V12.48h.66q.327 0 .512.181.185.183.185.522m1.217-1.333v3.999h1.46q.602 0 .998-.237a1.45 1.45 0 0 0 .595-.689q.196-.45.196-1.084 0-.63-.196-1.075a1.43 1.43 0 0 0-.589-.68q-.396-.234-1.005-.234zm.791.645h.563q.371 0 .609.152a.9.9 0 0 1 .354.454q.118.302.118.753a2.3 2.3 0 0 1-.068.592 1.1 1.1 0 0 1-.196.422.8.8 0 0 1-.334.252 1.3 1.3 0 0 1-.483.082h-.563zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638z"/>
+                            </svg>
+                        </a></td>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+
+<!-------- Footer -------->
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-------- End Footer -------->
+
+<!-- Vendor JS Files -->
+<th:block th:include="fragments/fragmentjs.html"></th:block>
+
+<!-- End Vendor JS Files -->
+
+
+</body>
+
+</html>

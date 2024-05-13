@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+        <head>
+            <meta charset="UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <title>REGISTRO DE VACACIONES</title>
+            <th:block th:include="fragments/fragmentcss.html"></th:block>
+            <style>
+                .pagination {
+                    display: flex;
+                    list-style: none;
+                    border-radius: 0.25rem;
+                }
+
+                .page-item {
+                    padding: 0.5rem 0.75rem;
+                }
+
+                .page-link {
+                    position: relative;
+                    display: block;
+                    padding: 0.5rem 1rem;
+                    overflow: hidden;
+                    border: 1px solid #dee2e6;
+                }
+
+                .page-link:hover {
+                    z-index: 2;
+                    text-decoration: none;
+                    background-color: #e9ecef;
+                    border-color: #dee2e6;
+                }
+
+                .page-link.active {
+                    z-index: 2;
+                    color: #fff;
+                    background-color: #0d6efd;
+                    border-color: #0d6efd;
+                }
+                .alert {
+                    border-radius: 0;
+                    -webkit-border-radius: 0;
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.11);
+                    display: table;
+                    width: 100%;
+                }
+
+                .alert-white {
+                    background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+                    border-top-color: #d8d8d8;
+                    border-bottom-color: #bdbdbd;
+                    border-left-color: #cacaca;
+                    border-right-color: #cacaca;
+                    color: #404040;
+                    padding-left: 61px;
+                    position: relative;
+                }
+
+                .alert-white.rounded {
+                    border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                }
+
+                .alert-white.rounded .icon {
+                    border-radius: 3px 0 0 3px;
+                    -webkit-border-radius: 3px 0 0 3px;
+                }
+
+                .alert-white .icon {
+                    text-align: center;
+                    width: 45px;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    border: 1px solid #bdbdbd;
+                    padding-top: 15px;
+                }
+
+
+                .alert-white .icon:after {
+                    -webkit-transform: rotate(45deg);
+                    -moz-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    -o-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    display: block;
+                    content: '';
+                    width: 10px;
+                    height: 10px;
+                    border: 1px solid #bdbdbd;
+                    position: absolute;
+                    border-left: 0;
+                    border-bottom: 0;
+                    top: 50%;
+                    right: -6px;
+                    margin-top: -3px;
+                    background: #fff;
+                }
+
+                .alert-white .icon i {
+                    font-size: 20px;
+                    color: #fff;
+                    left: 12px;
+                    margin-top: -10px;
+                    position: absolute;
+                    top: 50%;
+                }
+                /*============ colors ========*/
+                .alert-success {
+                    color: #3c763d;
+                    background-color: #dff0d8;
+                    border-color: #d6e9c6;
+                }
+
+                .alert-white.alert-success .icon,
+                .alert-white.alert-success .icon:after {
+                    border-color: #54a754;
+                    background: #60c060;
+                }
+
+                .alert-info {
+                    background-color: #d9edf7;
+                    border-color: #98cce6;
+                    color: #3a87ad;
+                }
+
+                .alert-white.alert-info .icon,
+                .alert-white.alert-info .icon:after {
+                    border-color: #3a8ace;
+                    background: #4d90fd;
+                }
+
+
+                .alert-white.alert-warning .icon,
+                .alert-white.alert-warning .icon:after {
+                    border-color: #d68000;
+                    background: #fc9700;
+                }
+
+                .alert-warning {
+                    background-color: #fcf8e3;
+                    border-color: #f1daab;
+                    color: #c09853;
+                }
+
+                .alert-danger {
+                    background-color: #f2dede;
+                    border-color: #e0b1b8;
+                    color: #b94a48;
+                }
+
+                .alert-white.alert-danger .icon,
+                .alert-white.alert-danger .icon:after {
+                    border-color: #ca452e;
+                    background: #da4932;
+                }
+            </style>
+        </head>
+
+        <body id="body">
+            <!---------- Header ---------->
+            <header th:insert="~{fragments/header :: header}"></header>
+            <!---------- End Header ----------->
+
+            <!---------- Sidebar ----------->
+            <aside th:insert="~{fragments/aside :: aside}"></aside>
+            <!---------- End Sidebar ----------->
+
+
+            <!---------- Main ----------->
+            <main id="main" class="main">
+                <div class="pagetitle">
+                    <section class="section dashboard">
+                        <div class="container bootstrap snippets bootdey">
+
+                            <div class="alert alert-danger alert-white rounded" th:if="${danger != null}">
+                                <div class="icon">
+                                    <i class="fa fa-times-circle"></i>
+                                </div>
+                                <strong th:text="${danger}"></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+
+                            <div class="alert alert-success alert-white rounded" th:if="${success != null}">
+                                <div class="icon">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <strong>Success!</strong>
+                                <span th:text="${success}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+
+                            <div class="alert alert-warning alert-white rounded" th:if="${warning != null}" style="width: 50%">
+                                <div class="icon">
+                                    <i class="fa fa-warning"></i>
+                                </div>
+                                <strong>Success!</strong>
+                                <span th:text="${warning}"></span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="margin-left: 35%" >×</button>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="container" style="margin-bottom: 5%" >
+
+                            <h4 class="mb-4 form-position" style="margin-right: 50%; margin-left: 5%;">ASIGNAR VACACIONES</h4>
+
+
+                            <div class="form-position row g-3" style="margin-left: 5%; margin-top: 3%;">
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                    <form  method="POST" th:action="@{/dashboard/vacaciones/agregarTrabajador}">
+                                                        <div class="mb-2">
+                                                            <label for="nrodocumento">DNI</label>
+                                                            <input type="text" id="nrodocumento" class="form-control" maxlength="8" name="nroducumento" th:value="${trabajadorSeleccionado?.nrodocumento}" >
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <button class="btn btn-primary" type="submit">Buscar Trabajador</button>
+                                                        </div>
+                                                    </form>
+                                            </div>
+                                            <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                            <label for="nombre">Nombre Trabajador:</label>
+                                                            <input type="text" id="nombre" name="nombre" class="form-control" readonly th:value="${detalle?.nombreTrabajadores}">
+                                                    </div>
+                                            </div>
+                                    </div>
+                                <div class="row">
+                                        <div class="col-md-18">
+                                            <label class="mb-2">Inicio de Vacaciones</label>
+
+                                            <form class="d-flex flex-row mb-2" method="post" th:action="@{/dashboard/vacaciones/registrarFechaInicio}">
+
+                                                <div class="me-2">
+                                                    <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+                                                    <input type="date" th:field="*{detalle.fechaInicio}" class="form-control"  id="fechaInicio" placeholder="Fecha de Inicio"/>
+                                                </div>
+
+                                                <div class="me-2">
+                                                    <label for="fechaFin" class="form-label">Fecha Fin</label>
+                                                    <input type="date" th:field="*{detalle.fechaFin}" class="form-control" id="fechaFin" placeholder="Fecha de Fin"/>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary" style="width: 100px; height: 40px; margin-top: 30px">Registrar</button>
+
+                                            </form>
+                                        </div>
+
+                                        <div class="col-md-8" style="margin-top: 3%">
+                                            <form th:action="@{/dahsboard/vacaciones/guardarVacaciones}" method="post">
+                                                <button class="btn btn-success me-2" type="submit">
+                                                    Guardar Vacaciones
+                                                </button>
+                                            </form>
+                                        </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                </div>
+            </main>
+            <!---------- End Main ----------->
+                    <!-------- Footer -------->
+                    <footer th:insert="~{fragments/footer :: footer}"></footer>
+                    <!-------- End Footer -------->
+
+                    <!-- Vendor JS Files -->
+                    <th:block th:insert="~{fragments/fragmentjs}"></th:block>
+                    <!-- End Vendor JS Files -->
+        </body>
+</html>

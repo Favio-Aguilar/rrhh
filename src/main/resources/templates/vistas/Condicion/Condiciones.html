@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link th:href="@{assets/css/formlogin.css}" rel="stylesheet" />
+    <title>Listado de Condiciones</title>
+
+    <th:block th:include="fragments/fragmentcss.html"></th:block>
+</head>
+
+<body id="body">
+<!---------- Header ----------->
+<header th:replace="fragments/header :: header"></header>
+<!---------- End Header ----------->
+<!---------- Sidebar ----------->
+<aside th:replace="fragments/aside :: aside"></aside>
+<!---------- Main ----------->
+<main id="main" class="main">
+    <div class="pagetitle">
+        <div class="section dashboard">
+            <div class="container-fluid" id="container-fluid">
+                <div class="card mb-4">
+                    <div class="card-bod">
+                        <a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#registrarModal"  th:href="@{/vistas/Condicion/Registrar}"
+                           th:text="'NUEVA CONDICION'" title="CREAR NUEVO REGISTRO">
+                        </a>
+                    </div>
+                        <div
+                                class="alert alert-warning alert-dismissible fade show mt-2 mb-2"
+                                role="alert"
+                                th:if="${mensaje != null}"
+                                th:text="${mensaje}"
+                        >
+
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-bod">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NOMBRE</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cond : ${condicion}">
+                                <th scope="row" th:text="${cond.id}">1</th>
+                                <td th:text="${cond.nombre}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                     </div>
+                </div>
+             </div>
+
+        <!---------------------------MODAL FORMULARIO --------------------------->
+        <div class="modal fade" id="registrarModal" tabindex="-1" aria-labelledby="registrarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registrarModalLabel">Registrar Condicion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-position row g-3" th:action="@{/vistas/Condicion/RegistrarCondicion}"
+                              th:object="${condiciones}"
+                              method="post">
+                            <div class="form-group row">
+                                <input type="hidden" th:field="*{id}" />
+                            </div>
+
+                            <div class="col-md-10">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input
+                                        type="text"
+                                        th:field="*{nombre}"
+                                        class="form-control"
+                                        id="nombre"
+                                        placeholder="Nombre de la Condicion"
+                                />
+                               <!-- <small
+                                        class="form-text text-danger"
+                                        th:if="${#fields.hasErrors('nombre')}"
+                                        th:errors="*{nombre}"
+                                ></small>-->
+
+                                <span th:if="${#fields.hasErrors('nombre')}">
+                                        <small class="form-text text-danger" th:errors="*{nombre}">ESTE NOMBRE YA EXISTE</small>
+                                </span>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <input type="submit" class="btn btn-primary" value="Registrar" />
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--------------------------- END MODAL FORMULARIO --------------------------->
+
+
+
+    </div>
+</main>
+<!---------- End Main ----------->
+
+
+
+<!---------- End Main ----------->
+
+<!-------- Footer -------->
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-------- End Footer -------->
+
+<!-- Vendor JS Files -->
+<th:block th:include="fragments/fragmentjs.html"></th:block>
+<!-- End Vendor JS Files -->
+</body>
+
+</html>

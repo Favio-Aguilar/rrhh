@@ -1,0 +1,65 @@
+<aside id="sidebar" class="sidebar" th:fragment="aside" xmlns:th="http://www.thymeleaf.org">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/dashboard}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" th:href="@{/vistas/Trabajadores/Trabajadores}">
+        <i class="bi bi-person"></i>
+        <span>TRABAJADORES</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" th:href="@{/vistas/Hijos/Hijos}">
+        <i class="bi bi-person"></i>
+        <span>HIJOS</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" th:href="@{/dashboard/vacaciones}">
+        <i class="bi bi-person"></i>
+        <span>VACACIONES</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#components-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="bi bi-menu-button-wide"></i><span>Mantenimientos</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul
+        id="components-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a th:href="@{/api/Condicion/listar}">
+            <i class="bi bi-circle"></i><span>CONDICION</span>
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/api/Funcion/listar}">
+            <i class="bi bi-circle"></i><span>GRUPO OCUPACIONAL</span>
+          </a>
+        </li>
+       <!-- <li>
+          <a th:href="@{/vistas/Clientes/Clientes}">
+            <i class="bi bi-circle"></i><span>Clientes</span>
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/vistas/Proveedores/Proveedores}">
+            <i class="bi bi-circle"></i><span>Proveedores</span>
+          </a>
+        </li> -->
+      </ul>
+    </li>
+  </ul>
+</aside>

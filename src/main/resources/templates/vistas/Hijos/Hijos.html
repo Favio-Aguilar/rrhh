@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<title>Listado de Hijos</title>
+
+	<th:block th:include="fragments/fragmentcss.html"></th:block>
+	<style>
+		.pagination {
+            display: flex;
+            list-style: none;
+            border-radius: 0.25rem;
+        }
+
+        .page-item {
+            padding: 0.5rem 0.75rem;
+        }
+
+        .page-link {
+            position: relative;
+            display: block;
+            padding: 0.5rem 1rem;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .page-link:hover {
+            z-index: 2;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+        .page-link.active {
+            z-index: 2;
+            color: #fff;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .alert {
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.11);
+            display: table;
+            width: 100%;
+        }
+
+        .alert-white {
+            background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+            border-top-color: #d8d8d8;
+            border-bottom-color: #bdbdbd;
+            border-left-color: #cacaca;
+            border-right-color: #cacaca;
+            color: #404040;
+            padding-left: 61px;
+            position: relative;
+        }
+
+        .alert-white.rounded {
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+        }
+
+        .alert-white.rounded .icon {
+            border-radius: 3px 0 0 3px;
+            -webkit-border-radius: 3px 0 0 3px;
+        }
+
+        .alert-white .icon {
+            text-align: center;
+            width: 45px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #bdbdbd;
+            padding-top: 15px;
+        }
+
+
+        .alert-white .icon:after {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+            display: block;
+            content: '';
+            width: 10px;
+            height: 10px;
+            border: 1px solid #bdbdbd;
+            position: absolute;
+            border-left: 0;
+            border-bottom: 0;
+            top: 50%;
+            right: -6px;
+            margin-top: -3px;
+            background: #fff;
+        }
+
+        .alert-white .icon i {
+            font-size: 20px;
+            color: #fff;
+            left: 12px;
+            margin-top: -10px;
+            position: absolute;
+            top: 50%;
+        }
+        /*============ colors ========*/
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        .alert-white.alert-success .icon,
+        .alert-white.alert-success .icon:after {
+            border-color: #54a754;
+            background: #60c060;
+        }
+
+        .alert-info {
+            background-color: #d9edf7;
+            border-color: #98cce6;
+            color: #3a87ad;
+        }
+
+        .alert-white.alert-info .icon,
+        .alert-white.alert-info .icon:after {
+            border-color: #3a8ace;
+            background: #4d90fd;
+        }
+
+
+        .alert-white.alert-warning .icon,
+        .alert-white.alert-warning .icon:after {
+            border-color: #d68000;
+            background: #fc9700;
+        }
+
+        .alert-warning {
+            background-color: #fcf8e3;
+            border-color: #f1daab;
+            color: #c09853;
+        }
+
+        .alert-danger {
+            background-color: #f2dede;
+            border-color: #e0b1b8;
+            color: #b94a48;
+        }
+
+        .alert-white.alert-danger .icon,
+        .alert-white.alert-danger .icon:after {
+            border-color: #ca452e;
+            background: #da4932;
+        }
+	</style>
+</head>
+
+<body id="body">
+	<!---------- Header ----------->
+	<header th:replace="fragments/header :: header"></header>
+	<!---------- End Header ----------->
+
+	<!---------- Sidebar ----------->
+	<aside th:replace="fragments/aside :: aside"></aside>
+	<!---------- End Sidebar ----------->
+
+
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<div
+					class="alert alert-warning alert-dismissible fade show mt-2 mb-2"
+					role="alert"
+					th:if="${mensaje != null}"
+					th:text="${mensaje}"
+			>
+				<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="alert"
+						aria-label="Close"
+				></button>
+			</div>
+			<form action="/vistas/Hijos/Hijos" method="get">
+				<div class="input-group mb-3">
+				<input  class="form-control" type="text" name="nombreTrabajador" placeholder="Ingrese nombre del trabajador">
+				<button class="btn btn-info" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+					Buscar
+					<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+				</svg>
+				</button>
+				</div>
+			</form>
+
+			<section class="section dashboard">
+				<div class="container">
+					<!--<a class="btn btn-primary btn-sm" th:href="@{/vistas/Hijos/Registrar}"
+						th:text="'Registrar Hijo'" title="Registrar Hijo">
+					</a>-->
+					<br />
+					<div
+							class="alert alert-success alert-dismissible fade show mt-2 mb-2"
+							role="alert"
+							th:if="${success != null}"
+							th:text="${success}"
+					>
+						<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="alert"
+								aria-label="Close"
+						></button>
+					</div>
+					<div class="table-responsive">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">NOMBRE</th>
+								<th scope="col">APELLIDOS</th>
+								<th scope="col">EDAD</th>
+								<th scope="col">DNI</th>
+								<th scope="col">TRABAJADOR</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="hij: ${hijo}">
+								<td th:text="${hij.id}"></td>
+								<td th:text="${hij.nombre_hijo}"></td>
+								<td th:text="${hij.apellido_hijo}"></td>
+								<td th:text="${hij.edad}"></td>
+								<td th:text="${hij.nro_documento}"></td>
+								<td th:text="${hij.trabajador.nombre}"></td>
+
+								<td>
+									<a class="btn btn-success btn-sm"
+										th:href="@{/vistas/Hijos/Editar/} + ${hij.id}" th:text="'EDITAR'"
+										title="EDITAR HIJO">
+									</a>
+								</td>
+								<td>
+									<a class="btn btn-danger btn-sm"
+									   th:href="@{/vistas/Hijos/Eliminar/} + ${hij.id}" th:text="'ELIMINAR'"
+									   title="ELIMINAR HIJO" onclick="return confirm('ESTAS SEGURO DE ELIMINAR ?')">
+									</a>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+						<nav th:if="${bookPage.totalPages > 0}" aria-label="Page navigation example">
+							<ul class="pagination justify-content-center">
+								<li class="page-item" th:if="${bookPage.hasPrevious()}">
+									<a class="page-link" th:href="@{/vistas/Hijos/Hijos(size=${bookPage.size}, page=${bookPage.number - 1})}" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+
+								<li class="page-item" th:each="pageNumber : ${pageNumbers}">
+									<a class="page-link" th:href="@{/vistas/Hijos/Hijos(size=${bookPage.size}, page=${pageNumber})}"
+									   th:text="${pageNumber}"
+									   th:class="${pageNumber == bookPage.number + 1} ? active : ''">
+									</a>
+								</li>
+
+								<li class="page-item" th:if="${bookPage.hasNext()}">
+									<a class="page-link" th:href="@{/vistas/Hijos/Hijos(size=${bookPage.size}, page=${bookPage.number + 1}+1)}" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+
+
+	<!-------- Footer -------->
+	<footer th:replace="fragments/footer :: footer"></footer>
+	<!-------- End Footer -------->
+
+	<!-- Vendor JS Files -->
+	<th:block th:include="fragments/fragmentjs.html"></th:block>
+
+	<!-- End Vendor JS Files -->
+
+
+</body>
+
+</html>

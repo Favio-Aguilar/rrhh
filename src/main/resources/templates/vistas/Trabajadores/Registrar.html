@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/x-icon"  th:href="@{assets/img/logoessalud.jpg}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Registrar Trabajador</title>
+  <th:block th:include="fragments/fragmentcss.html"></th:block>
+      <style>
+          .alert {
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.11);
+  display: table;
+  width: 100%;
+}
+
+.alert-white {
+  background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+  border-top-color: #d8d8d8;
+  border-bottom-color: #bdbdbd;
+  border-left-color: #cacaca;
+  border-right-color: #cacaca;
+  color: #404040;
+  padding-left: 61px;
+  position: relative;
+}
+
+.alert-white.rounded {
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+.alert-white.rounded .icon {
+  border-radius: 3px 0 0 3px;
+  -webkit-border-radius: 3px 0 0 3px;
+}
+
+.alert-white .icon {
+  text-align: center;
+  width: 45px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #bdbdbd;
+  padding-top: 15px;
+}
+
+
+.alert-white .icon:after {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  display: block;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border: 1px solid #bdbdbd;
+  position: absolute;
+  border-left: 0;
+  border-bottom: 0;
+  top: 50%;
+  right: -6px;
+  margin-top: -3px;
+  background: #fff;
+}
+
+.alert-white .icon i {
+  font-size: 20px;
+  color: #fff;
+  left: 12px;
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+}
+/*============ colors ========*/
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-white.alert-success .icon,
+.alert-white.alert-success .icon:after {
+  border-color: #54a754;
+  background: #60c060;
+}
+
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #98cce6;
+  color: #3a87ad;
+}
+
+.alert-white.alert-info .icon,
+.alert-white.alert-info .icon:after {
+  border-color: #3a8ace;
+  background: #4d90fd;
+}
+
+
+.alert-white.alert-warning .icon,
+.alert-white.alert-warning .icon:after {
+  border-color: #d68000;
+  background: #fc9700;
+}
+
+.alert-warning {
+  background-color: #fcf8e3;
+  border-color: #f1daab;
+  color: #c09853;
+}
+
+.alert-danger {
+  background-color: #f2dede;
+  border-color: #e0b1b8;
+  color: #b94a48;
+}
+
+.alert-white.alert-danger .icon,
+.alert-white.alert-danger .icon:after {
+  border-color: #ca452e;
+  background: #da4932;
+}
+      </style>
+
+  </head>
+
+  <body id="body">
+    <!---------- Header ----------->
+    <header th:replace="fragments/header :: header"></header>
+    <!---------- End Header ----------->
+
+    <!---------- Sidebar ----------->
+    <aside th:replace="fragments/aside :: aside"></aside>
+    <!---------- End Sidebar ----------->
+
+    <!---------- Main ----------->
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <section class="section dashboard">
+            <div class="container bootstrap snippets bootdey">
+
+                <div class="alert alert-danger alert-white rounded" th:if="${danger != null}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="icon">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
+                    <strong th:text="${danger}"></strong>
+                </div>
+
+                <div class="alert alert-success alert-white rounded" th:if="${success != null}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <strong>Success!</strong>
+                    <span th:text="${success}"></span>
+                </div>
+            </div>
+
+
+
+
+      <!---------INICIO DIV CONTAINER------->
+      <div class="container-responsive">
+
+
+        <h2 class="mb-4 form-position" style="margin-right: 50%; margin-left: 10%;">Formulario de Trabajadores</h2>
+
+        <!---------FIN FORMULARIO------->
+        <form class="form-position row g-3" th:action="@{/vistas/Trabajadores/Registrar}" th:object="${trabajador}" method="post" style="margin-right: 10%; margin-left: 10%;">
+
+            <div class="form-group row">
+              <input type="hidden" th:field="*{id}" />
+            </div>
+
+                <!---------INICIO col-md-6------->
+                  <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Nombre del Trabajador"/>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+                  </div>
+                <!---------FIN col-md-6------->
+
+
+                <!---------INICIO col-md-6------->
+                <div class="col-md-6">
+                <label for="apellido" class="form-label">Apellidos</label>
+                <input
+                        type="text"
+                        th:field="*{apellido}"
+                        class="form-control"
+                        id="apellido"
+                        placeholder="Apellido del Trabajador"
+                />
+                <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('apellido')}"
+                        th:errors="*{apellido}"
+                ></small>
+              </div>
+                <!---------FIN col-md-6------->
+
+
+
+              <!---------INICIO col-md-6------->
+                <div class="col-md-4">
+              <label for="codplanilla" class="form-label">Codigo de Planilla</label>
+              <input
+                      type="text"
+                      th:field="*{codplanilla}"
+                      class="form-control"
+                      id="codplanilla"
+                      placeholder="Codigo de Planilla"
+                      maxlength="7"
+              />
+              <!-- MANEJO DE ERRORES-->
+              <!-- Si este campo tiene errores que me lo muestre -->
+              <small
+                      class="form-text text-danger"
+                      th:if="${#fields.hasErrors('codplanilla')}"
+                      th:errors="*{codplanilla}"
+              ></small>
+           </div>
+              <!---------FIN col-md-6------->
+
+              <div class="col-md-4">
+                    <label for="nrodocumento" class="form-label">DNI</label>
+                    <input type="text" th:field="*{nrodocumento}" class="form-control" id="nrodocumento" placeholder="DNI" maxlength="8"/>
+                    <!-- MANEJO DE ERRORES-->
+                    <!-- Si este campo tiene errores que me lo muestre -->
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('nrodocumento')}" th:errors="*{nrodocumento}"></small>
+              </div>
+
+
+
+                <div class="col-md-5">
+                <label for="direccion" class="form-label">Direccion</label>
+                <input type="text" th:field="*{direccion}" class="form-control" id="direccion" placeholder="Dirección"/>
+                <!-- MANEJO DE ERRORES-->
+                <!-- Si este campo tiene errores que me lo muestre -->
+                <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('direccion')}"
+                        th:errors="*{direccion}"
+                ></small>
+              </div>
+
+
+
+                <div class="col-md-3">
+                  <label for="fechaTrabajador" class="form-label">Fecha de Ingreso</label>
+                  <input
+                          type="date"
+                          th:field="*{fechaTrabajador}"
+                          class="form-control"
+                          id="fechaTrabajador"
+                          placeholder="Fecha de Ingreso" required
+                  />
+                  <!-- MANEJO DE ERRORES-->
+                  <!-- Si este campo tiene errores que me lo muestre -->
+                  <small
+                          class="form-text text-danger"
+                          th:if="${#fields.hasErrors('fechaTrabajador')}"
+                          th:errors="*{fechaTrabajador}"
+                  ></small>
+                </div>
+
+
+                <div class="col-md-3">
+                  <label for="fechanacimiento" class="form-label">Fecha de Nacimiento</label>
+                  <input type="date" th:field="*{fechanacimiento}"
+                          class="form-control"
+                          id="fechanacimiento"
+                          placeholder="Fecha de Nacimiento" required
+                  />
+                  <!-- MANEJO DE ERRORES-->
+                  <!-- Si este campo tiene errores que me lo muestre -->
+                  <small
+                          class="form-text text-danger"
+                          th:if="${#fields.hasErrors('fechanacimiento')}"
+                          th:errors="*{fechanacimiento}"
+                  ></small>
+                </div>
+
+
+                <div class="col-md-1" hidden="hidden">
+                  <label for="edad" class="form-label">Edad</label>
+                  <input
+                          type="text"
+                          th:field="*{edad}"
+                          class="form-control"
+
+                          id="edad"
+                          placeholder="Edad del Trabajador" disabled
+                  />
+
+                </div>
+
+
+                <div class="col-md-3">
+                  <label for="celular" class="form-label">Celular</label>
+                  <input
+                          type="text"
+                          th:field="*{celular}"
+                          class="form-control"
+                          id="celular"
+                          placeholder="celular"
+                          maxlength="9"
+                  />
+                  <!-- MANEJO DE ERRORES-->
+                  <!-- Si este campo tiene errores que me lo muestre -->
+                  <small
+                          class="form-text text-danger"
+                          th:if="${#fields.hasErrors('celular')}"
+                          th:errors="*{celular}"
+                  ></small>
+                </div>
+
+
+                <div class="col-md-4">
+                  <label for="sexo" class="form-label">Sexo: </label>
+                    <select th:field="*{sexo}" class="form-control" id="sexo" required>
+                      <option value="">Seleccione</option>
+                      <option value="M">Maculino</option>
+                      <option value="F">Femenino</option>
+                    </select>
+                </div>
+
+
+                <div class="col-md-4">
+                  <label for="id_grupo_ocupacional" class="form-label">Grupo Ocupacional: </label>
+                  <select th:field="*{grupoOcupacional}"  class="form-control"  id="id_grupo_ocupacional" >
+                    <option th:each="func : ${grupoOcupacional}" th:value="${func.id}" th:text="${func.nombre}"></option>
+                  </select>
+                </div>
+
+
+
+                <div class="col-md-4">
+                  <label for="id_condicion" class="form-label">Condicion: </label>
+                  <select th:field="*{condicion}" class="form-control" id="id_condicion">
+                    <option th:each="cond : ${condicion}" th:value="${cond.id}" th:text="${cond.nombre}"></option>
+                  </select>
+                </div>
+
+
+                 <div class="col-md-5">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="email" th:field="*{correo}" class="form-control" id="correo" placeholder="correo"/>
+                <!-- MANEJO DE ERRORES-->
+                <!-- Si este campo tiene errores que me lo muestre -->
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></small>
+              </div>
+
+
+                <div class="col-md-5">
+                <label for="nrohijos" class="form-label">Numero de Hijos</label>
+                <input
+                        type="text"
+                        th:field="*{nrohijos}"
+                        class="form-control"
+                        id="nrohijos"
+                        placeholder="nrohijos"
+                />
+                <!-- MANEJO DE ERRORES-->
+                <!-- Si este campo tiene errores que me lo muestre -->
+                <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('nrohijos')}"
+                        th:errors="*{nrohijos}"
+                ></small>
+              </div>
+
+                 <div class="col-12">
+          <input type="submit" class="btn btn-primary" value="Registrar" />
+        </div>
+        </form>
+        <!---------FIN FORMULARIO------->
+      </div>
+            <!---------FIN DIV CONTAINER------->
+        </section>
+      </div>
+    </main>
+    <!---------- End Main ----------->
+        <!-------- Footer -------->
+        <footer th:replace="fragments/footer :: footer"></footer>
+        <!-------- End Footer -------->
+
+        <!-- Vendor JS Files -->
+        <th:block th:include="fragments/fragmentjs.html"></th:block>
+       <!-- End Vendor JS Files -->
+  </body>
+
+</html>

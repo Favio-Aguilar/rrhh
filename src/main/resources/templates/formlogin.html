@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/x-icon"  th:href="@{assets/img/logoessalud.jpg}">
+    <title>LOGIN</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+    <link
+      th:href="@{assets/vendor/bootstrap/css/bootstrap.min.css}"
+      rel="stylesheet"
+    />
+    <link th:href="@{assets/css/formlogin.css}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row vh-100 justify-content-center align-items-center">
+        <div class="col-12 col-md-2 col-lg-4"></div>
+        <div class="col-12 col-md-8 col-lg-4" id="login">
+          <div
+            th:if="${param.logout}"
+            class="alert alert-success alert-dismissible fade show"
+          >
+            Has cerrado sesión correctamente
+          </div>
+          <div
+            th:if="${param.error}"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            Usuario y/o contraseña incorrecta
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="d-flex justify-content-center">
+            <img
+              th:src="@{assets/img/logoessalud.jpg}"
+              width="150"
+              height="150"
+            />
+          </div>
+          <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+              <label htmlFor="email" class="form-label">
+                Correo del Usuario :
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                placeholder="Ingresa tu nombre de usuario"
+                name="username"
+              />
+            </div>
+            <div class="mb-3">
+              <label htmlFor="password" class="form-label">
+                Contraseña :
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Ingresa tu contraseña"
+                name="password"
+              />
+            </div>
+            <button type="submit" class="btn">Iniciar Sesión</button>
+          </form>
+        </div>
+        <div class="col-11 col-md-2 col-lg-4"></div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-2.5.1.js"></script>
+  <script
+    th:src="@{assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"
+  ></script>
+</html>

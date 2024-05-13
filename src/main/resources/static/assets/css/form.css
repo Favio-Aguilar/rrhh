@@ -1,0 +1,12 @@
+.form-group.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-group.row .col-md-2 {
+  flex-basis: 20%;
+}
+
+.form-group.row .col-md-6 {
+  flex-basis: 60%;
+}

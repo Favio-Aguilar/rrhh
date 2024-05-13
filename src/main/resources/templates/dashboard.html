@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GESTOR RRHH</title>
+    <th:block th:include="fragments/fragmentcss.html"></th:block>
+  </head>
+
+  <body id="body">
+    <!---------- Header ----------->
+    <header th:replace="fragments/header :: header"></header>
+    <!---------- End Header ----------->
+
+    <!---------- Sidebar ----------->
+    <aside th:replace="fragments/aside :: aside"></aside>
+    <!---------- End Sidebar ----------->
+
+    <!---------- Main ----------->
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <section class="section dashboard">
+          <h1>Dashboad</h1>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a th:href="@{/dashboard}">EsSalud</a>
+              </li>
+            </ol>
+          </nav>
+        </section>
+      </div>
+    </main>
+    <!---------- End Main ----------->
+
+    <!-------- Footer -------->
+    <footer th:replace="fragments/footer :: footer"></footer>
+    <!-------- End Footer -------->
+
+    <!-- Vendor JS Files -->
+    <th:block th:include="fragments/fragmentjs.html"></th:block>
+    <!-- End Vendor JS Files -->
+  </body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<link rel="icon" type="image/x-icon"  th:href="@{assets/img/logoessalud.jpg}">
+	<title>Registrar Hijo</title>
+	<th:block th:include="fragments/fragmentcss.html"></th:block>
+
+</head>
+
+<body id="body">
+<!---------- Header ----------->
+<header th:replace="fragments/header :: header"></header>
+<!---------- End Header ----------->
+
+<!---------- Sidebar ----------->
+<aside th:replace="fragments/aside :: aside"></aside>
+<!---------- End Sidebar ----------->
+
+<!---------- Main ----------->
+<main id="main" class="main">
+	<div class="pagetitle">
+		<section class="section dashboard">
+			<h1>Dashboad</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="index.html">EsSalud</a>
+					</li>
+				</ol>
+			</nav>
+		</section>
+	</div>
+</main>
+<!---------- End Main ----------->
+
+<!--  -->
+<div class="container" style="margin-bottom: 5%" >
+	<div
+			class="alert alert-danger alert-dismissible fade show mt-2 mb-2"
+			role="alert"
+			th:if="${danger != null}"
+			th:text="${danger}"
+	>
+		<button
+				type="button"
+				class="btn-close"
+				data-bs-dismiss="alert"
+				aria-label="Close"
+		></button>
+	</div>
+	<div
+			class="alert alert-success alert-dismissible fade show mt-2 mb-2"
+			role="alert"
+			th:if="${success != null}"
+			th:text="${success}"
+	>
+		<button
+				type="button"
+				class="btn-close"
+				data-bs-dismiss="alert"
+				aria-label="Close"
+		></button>
+	</div>
+
+	<h2 class="mb-4 form-position">Formulario de Hijos</h2>
+
+	<form class="form-position row g-3" th:action="@{/vistas/Hijos/UpdateHijo}"
+		  th:object="${hijo}"
+		  method="post">
+		<div class="form-group row">
+			<input type="hidden" th:field="*{id}" />
+		</div>
+		<div class="form-group row">
+			<input type="hidden" th:field="*{trabajador}" />
+		</div>
+		<div class="form-group row">
+			<label  class="form-label">USTED TIENE: <input type="text"  th:field="*{trabajador.nrohijos}"  disabled/> HIJOS </label>
+
+		</div>
+		<!---->
+		<div class="col-md-6">
+			<label for="nombre_hijo" class="form-label">Nombre</label>
+			<input
+					type="text"
+					th:field="*{nombre_hijo}"
+					class="form-control"
+					id="nombre_hijo"
+					placeholder="Nombre del Hijo"
+			/>
+			<small
+					class="form-text text-danger"
+					th:if="${#fields.hasErrors('nombre_hijo')}"
+					th:errors="*{nombre_hijo}"
+			></small>
+		</div>
+		<div class="col-md-6">
+			<label for="apellido_hijo" class="form-label">Apellidos</label>
+			<input
+					type="text"
+					th:field="*{apellido_hijo}"
+					class="form-control"
+					id="apellido_hijo"
+					placeholder="Apellido del Hijo"
+			/>
+			<small
+					class="form-text text-danger"
+					th:if="${#fields.hasErrors('apellido_hijo')}"
+					th:errors="*{apellido_hijo}"
+			></small>
+		</div>
+
+		<div class="col-md-2">
+			<label for="edad" class="form-label">Edad</label>
+			<input
+					type="number"
+					th:field="*{edad}"
+					class="form-control"
+					id="edad"
+					placeholder="Edad del Trabajador"
+			/>
+			<small
+					class="form-text text-danger"
+					th:if="${#fields.hasErrors('edad')}"
+					th:errors="*{edad}"
+			></small>
+		</div>
+
+
+
+		<div class="col-md-4">
+			<label for="nro_documento" class="form-label">DNI</label>
+			<input
+					type="text"
+					th:field="*{nro_documento}"
+					class="form-control"
+					id="nro_documento"
+					placeholder="DNI" maxlength="8"
+			/>
+			<!-- MANEJO DE ERRORES-->
+			<!-- Si este campo tiene errores que me lo muestre -->
+			<small
+					class="form-text text-danger"
+					th:if="${#fields.hasErrors('nro_documento')}"
+					th:errors="*{nro_documento}"
+			></small>
+		</div>
+
+
+
+		<div class="col-12">
+			<input type="submit" class="btn btn-primary" value="Registrar" />
+		</div>
+	</form>
+</div>
+
+<!--  -->
+<!-------- Footer -------->
+<footer th:replace="fragments/footer :: footer"></footer>
+<!-------- End Footer -------->
+
+<!-- Vendor JS Files -->
+<th:block th:include="fragments/fragmentjs.html"></th:block>
+<!-- End Vendor JS Files -->
+</body>
+
+</html>

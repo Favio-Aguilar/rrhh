@@ -1,0 +1,64 @@
+<header
+  id="header"
+  class="header fixed-top d-flex align-items-center"
+  th:fragment="header"
+>
+  <div class="d-flex align-items-center justify-content-between">
+    <a th:href="@{/dashboard}" class="logo d-flex align-items-center">
+      <img th:src="@{/assets/img/logoessalud.jpg}" alt="logo" />
+      <span class="d-none d-lg-block ms-2">EsSalud</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div>
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item d-block d-lg-none">
+        <a class="nav-link nav-icon search-bar-toggle" href="#"></a>
+      </li>
+      <li class="nav-item dropdown pe-3">
+        <a
+          class="nav-link nav-profile d-flex align-items-center pe-0"
+          href="#"
+          data-bs-toggle="dropdown"
+        >
+          <img
+            th:src="@{/assets/img/profile-img.jpg}"
+            alt="Profile"
+            class="rounded-circle"
+          />
+          <span
+            class="d-none d-md-block dropdown-toggle ps-2"
+            sec:authentication="principal.nombreUsuario"
+          ></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6 sec:authentication="principal.nombreUsuario"></h6>
+            <span>Administrador</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <a
+              class="dropdown-item d-flex align-items-center"
+              id="btn-logout"
+              href="#"
+            >
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Cerrar Sesión</span>
+              <form th:action="@{/logout}" method="post" id="formLogout">
+                <input
+                  type="submit"
+                  id="btn-form-logout"
+                  style="visibility: hidden"
+                />
+              </form>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>

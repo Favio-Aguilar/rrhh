@@ -1,0 +1,72 @@
+body {
+    background-image: url('../img/03.jpg');
+    background-size: cover;
+    padding: 0 10px;
+}
+
+#login {
+    background: white;
+    padding: 35px 20px;
+    border-radius: 8px;
+}
+.card-bod {
+  flex: 1 1 auto;
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  color: var(--bs-card-color);
+  margin-left: 50px;
+}
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.container-fluid{
+	--bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: 1000%;
+}
+
+.navbar > .container-fluid{
+	display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/**/
+@media (min-width: 1200px) {
+
+  #container-fluid {
+    margin-left: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+
+  #container-fluid {
+    margin-left: 0;
+  }
+
+}
+
+button{
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.btn {
+    background: #59D5E0;
+}
+.btn:hover {
+    background: #59D5E0;
+}
