@@ -56,17 +56,6 @@ public class HijosController {
         }
 
 
-        // Get list of workers with pagination
-//        Page<Hijos> bookPage;
-//        try {
-//            bookPage = iHijoService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-//        } catch (IllegalArgumentException e) {
-//            // Handle potential exception from service (e.g., log error, redirect)
-//            model.addAttribute("error", "Error: Invalid page number.");
-//            bookPage = Page.empty();
-//
-//        }
-
         List<Trabajador> trabajadores = trabajadorRepository.findAll();
         model.addAttribute("hijo", bookPage.getContent());
         model.addAttribute("trabajador", trabajadores);

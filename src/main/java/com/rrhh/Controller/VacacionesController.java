@@ -230,7 +230,7 @@ public class VacacionesController {
             //CALCULAD
                 //diasGozados = 19
                 int diasGozados = calculateVacationDays(fechaInicio, fechaFin);
-                vacaciones.setDiasTotales(diasGozados);//
+                //vacaciones.setDiasTotales(diasGozados);//
                 System.out.println("DIAS TOTALES :  " + diasGozados);
                 ////////////////////////////////////////////
             //buscar por el id del trabajador que es Andres con codigo 2 y el año  :
@@ -240,11 +240,9 @@ public class VacacionesController {
             if (diasGozados > 30){
                 redirectAttributes.addFlashAttribute("danger", "Ha excedido el límite anual de vacaciones (30 días)");
                 return "redirect:/dashboard/vacaciones/registrar";
-            } else {
-
-                    }if (diasGozados > diasAcumulados || diasAcumulados > diasGozados){
+            } else if (diasGozados > diasAcumulados || diasAcumulados > diasGozados){
                                 vacaciones.setEstado(0);//va deber vacaciones
-                    } else {
+            } else {
                                 vacaciones.setEstado(1);
                     }
 
@@ -274,6 +272,8 @@ public class VacacionesController {
     @PostMapping("/dahsboard/vacaciones/guardarVacaciones")
     public String guardarVacaciones(HttpServletRequest request, RedirectAttributes redirectAttrs) {
         VacacionesDTO vacaciones = obtenervacaciones(request);
+        int diasGozados = calculateVacationDays(vacaciones.getFechaInicio(), vacaciones.getFechaFin());
+        vacaciones.setDiasTotales(diasGozados);//
 
         if (vacaciones.getIdTrabajador() <= 0) {
             redirectAttrs.addFlashAttribute("warning", "Complete todos los datos , por favor ");
