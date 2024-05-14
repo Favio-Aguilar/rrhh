@@ -41,4 +41,10 @@ public class HomeController {
 
         return "usuario registrado";
     }
+
+    public String decifrar(){
+
+
+        return "";
+    }
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Table(name = "grupo_ocupacional")
 public class GrupoOcupacional {
 
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
